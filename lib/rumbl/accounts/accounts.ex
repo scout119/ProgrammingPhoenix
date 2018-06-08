@@ -3,111 +3,179 @@ defmodule Rumbl.Accounts do
   The Accounts context.
   """
 
-  import Ecto
   import Ecto.Query, warn: false
-  alias Rumbl.Repo
 
-  alias Rumbl.Accounts.Video
+  alias Rumbl.Repo
+  alias Rumbl.Accounts.User
 
   @doc """
-  Returns the list of videos.
+  Returns the list of users
 
   ## Examples
 
-      iex> list_videos()
-      [%Video{}, ...]
+    iex> list_users()
+    [%User{}, ...]
 
   """
-  def list_videos(user) do
-    Repo.all(user_videos(user))
+  def list_users do
+    Repo.all(User)
   end
 
   @doc """
-  Gets a single video.
+  Get a single user
 
-  Raises `Ecto.NoResultsError` if the Video does not exist.
+  Raises `Ecto.NoResultsError` if the User does not exist.
 
   ## Examples
 
-      iex> get_video!(123)
+      iex> get_user!(123)
       %Video{}
 
-      iex> get_video!(456)
+      iex> get_user!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_video!(user, id) do
-     Repo.get!(user_videos(user), id)
+  def get_user!(id) do
+    Repo.get!(User, id)
   end
 
+  def get_user(id) do
+    Repo.get(User, id)
+  end
+
+  def get_user_by(params) do
+    Repo.get_by(User, params)
+  end
+
+  def change_user(%User{} = user \\ %User{}) do
+    User.changeset(user, %{})
+  end
+
+  def create_user(attrs \\ %{}) do
+    %User{}
+    |> User.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def register_user(attrs \\ %{}) do
+    %User{}
+    |> User.registration_changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def get_user_by_email(email) do
+    from( u in User, join: c in assoc(u, :credential), where: c.email == ^email )
+    |> Repo.one()
+    |> Repo.preload(:credential)
+  end
+
+  def authenticate_by_email_and_pass(email, given_pass) do
+    user  = get_user_by_email(email)
+    cond do
+      user && Comeonin.Pbkdf2.checkpw(given_pass, user.credential.password_hash) ->
+        {:ok, user }
+      user ->
+        { :error, :unauthorized }
+      true ->
+        #timing attack defense
+        Comeonin.Pbkdf2.dummy_checkpw()
+        { :error, :not_found }
+    end
+  end
+
+  alias Rumbl.Accounts.Credential
+
   @doc """
-  Creates a video.
+  Returns the list of credentials.
 
   ## Examples
 
-      iex> create_video(%{field: value})
-      {:ok, %Video{}}
+      iex> list_credentials()
+      [%Credential{}, ...]
 
-      iex> create_video(%{field: bad_value})
+  """
+  def list_credentials do
+    Repo.all(Credential)
+  end
+
+  @doc """
+  Gets a single credential.
+
+  Raises `Ecto.NoResultsError` if the Credential does not exist.
+
+  ## Examples
+
+      iex> get_credential!(123)
+      %Credential{}
+
+      iex> get_credential!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_credential!(id), do: Repo.get!(Credential, id)
+
+  @doc """
+  Creates a credential.
+
+  ## Examples
+
+      iex> create_credential(%{field: value})
+      {:ok, %Credential{}}
+
+      iex> create_credential(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_video(user, attrs \\ %{}) do
-    user
-    |> build_assoc(:videos)
-    |> Video.changeset(attrs)
+  def create_credential(attrs \\ %{}) do
+    %Credential{}
+    |> Credential.changeset(attrs)
     |> Repo.insert()
   end
 
   @doc """
-  Updates a video.
+  Updates a credential.
 
   ## Examples
 
-      iex> update_video(video, %{field: new_value})
-      {:ok, %Video{}}
+      iex> update_credential(credential, %{field: new_value})
+      {:ok, %Credential{}}
 
-      iex> update_video(video, %{field: bad_value})
+      iex> update_credential(credential, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_video(%Video{} = video, attrs) do
-    video
-    |> Video.changeset(attrs)
+  def update_credential(%Credential{} = credential, attrs) do
+    credential
+    |> Credential.changeset(attrs)
     |> Repo.update()
   end
 
   @doc """
-  Deletes a Video.
+  Deletes a Credential.
 
   ## Examples
 
-      iex> delete_video(video)
-      {:ok, %Video{}}
+      iex> delete_credential(credential)
+      {:ok, %Credential{}}
 
-      iex> delete_video(video)
+      iex> delete_credential(credential)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_video(%Video{} = video) do
-    Repo.delete(video)
+  def delete_credential(%Credential{} = credential) do
+    Repo.delete(credential)
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking video changes.
+  Returns an `%Ecto.Changeset{}` for tracking credential changes.
 
   ## Examples
 
-      iex> change_video(video)
-      %Ecto.Changeset{source: %Video{}}
+      iex> change_credential(credential)
+      %Ecto.Changeset{source: %Credential{}}
 
   """
-  def change_video(%Video{} = video, params \\ %{}) do
-    Video.changeset(video, params)
+  def change_credential(%Credential{} = credential) do
+    Credential.changeset(credential, %{})
   end
-
-  defp user_videos(user) do
-    assoc(user, :videos)
-  end  
-
 end

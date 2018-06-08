@@ -15,9 +15,14 @@
     <%= text_input f, :username, placeholder: "Username", class: "form-control"%>
     <%= error_tag f, :username%>
   </div>
+
   <div class="form-group">
-    <%= password_input f, :password, placeholder: "Password", class: "form-control"%>
-    <%= error_tag f, :password%>
+    <%= inputs_for f, :credential, fn cf -> %>
+      <%= text_input cf, :email, placeholder: "Email", class: "form-control"%>
+      <%= error_tag cf, :email%>
+      <%= password_input cf, :password, placeholder: "Password", class: "form-control"%>
+      <%= error_tag cf, :password%>
+    <% end %>
   </div>
   <%= submit "Create User", class: "btn btn-primary"%>
 <% end %>

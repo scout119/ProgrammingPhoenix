@@ -1,4 +1,4 @@
-defmodule Rumbl.Accounts.Video do
+defmodule Rumbl.Multimedia.Video do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -7,7 +7,9 @@ defmodule Rumbl.Accounts.Video do
     field :description, :string
     field :title, :string
     field :url, :string
-    field :user_id, :id
+
+    belongs_to :user, Rumbl.Accounts.User
+    belongs_to :category, Rumbl.Multimideia.Category
 
     timestamps()
   end
@@ -15,7 +17,7 @@ defmodule Rumbl.Accounts.Video do
   @doc false
   def changeset(video, attrs) do
     video
-    |> cast(attrs, [:url, :title, :description])
+    |> cast(attrs, [:url, :title, :description, :category_id])
     |> validate_required([:url, :title, :description])
   end
 end

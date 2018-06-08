@@ -2,27 +2,26 @@ defmodule RumblWeb.UserController do
   use RumblWeb, :controller
   plug :authenticate_user when action in [:index, :show]
 
-  alias Rumbl.Repo
-  alias Rumbl.User
+  alias Rumbl.Accounts  
 
   def index(conn, _params) do
-      users = Repo.all(User)
+      users = Accounts.list_users()
       render(conn, "index.html", users: users)            
   end
 
-  def new(conn, _params) do
-    changeset = User.changeset(%User{})
-    render(conn, "new.html", changeset: changeset)
-  end
-
   def show(conn, %{"id" => id}) do
-    user = Repo.get(User, id)
+    user = Accounts.get_user(id)
     render(conn, "show.html", user: user)
   end  
 
+  def new(conn, _params) do
+    changeset = Accounts.change_user()
+    render(conn, "new.html", changeset: changeset)
+  end
+
+
   def create(conn, %{"user" => user_params}) do
-    changeset = User.registration_changeset(%User{}, user_params)
-    case Repo.insert(changeset) do      
+    case Accounts.register_user(user_params) do      
       {:ok, user } ->
         conn
           |> Rumbl.Auth.login(user)
