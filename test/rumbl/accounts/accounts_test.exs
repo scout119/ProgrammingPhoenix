@@ -1,131 +1,15 @@
 defmodule Rumbl.AccountsTest do
   use Rumbl.DataCase
 
-  alias Rumbl.Accounts
+  #alias Rumbl.Accounts.User
 
-  describe "videos" do
-    alias Rumbl.Accounts.Video
+  @valid_attrs %{name: "A User", username: "r2d2"}
 
-    @valid_attrs %{description: "some description", title: "some title", url: "some url"}
-    @update_attrs %{description: "some updated description", title: "some updated title", url: "some updated url"}
-    @invalid_attrs %{description: nil, title: nil, url: nil}
+  test "converts unique_constraint on username to error" do
+    insert_user(%{username: "eric"})
+    attrs = Map.put(@valid_attrs, :username, "eric")
 
-    def video_fixture(attrs \\ %{}) do
-      {:ok, video} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Accounts.create_video()
-
-      video
-    end
-
-    test "list_videos/0 returns all videos" do
-      video = video_fixture()
-      assert Accounts.list_videos() == [video]
-    end
-
-    test "get_video!/1 returns the video with given id" do
-      video = video_fixture()
-      assert Accounts.get_video!(video.id) == video
-    end
-
-    test "create_video/1 with valid data creates a video" do
-      assert {:ok, %Video{} = video} = Accounts.create_video(@valid_attrs)
-      assert video.description == "some description"
-      assert video.title == "some title"
-      assert video.url == "some url"
-    end
-
-    test "create_video/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Accounts.create_video(@invalid_attrs)
-    end
-
-    test "update_video/2 with valid data updates the video" do
-      video = video_fixture()
-      assert {:ok, video} = Accounts.update_video(video, @update_attrs)
-      assert %Video{} = video
-      assert video.description == "some updated description"
-      assert video.title == "some updated title"
-      assert video.url == "some updated url"
-    end
-
-    test "update_video/2 with invalid data returns error changeset" do
-      video = video_fixture()
-      assert {:error, %Ecto.Changeset{}} = Accounts.update_video(video, @invalid_attrs)
-      assert video == Accounts.get_video!(video.id)
-    end
-
-    test "delete_video/1 deletes the video" do
-      video = video_fixture()
-      assert {:ok, %Video{}} = Accounts.delete_video(video)
-      assert_raise Ecto.NoResultsError, fn -> Accounts.get_video!(video.id) end
-    end
-
-    test "change_video/1 returns a video changeset" do
-      video = video_fixture()
-      assert %Ecto.Changeset{} = Accounts.change_video(video)
-    end
-  end
-
-  describe "credentials" do
-    alias Rumbl.Accounts.Credential
-
-    @valid_attrs %{email: "some email", password_hash: "some password_hash"}
-    @update_attrs %{email: "some updated email", password_hash: "some updated password_hash"}
-    @invalid_attrs %{email: nil, password_hash: nil}
-
-    def credential_fixture(attrs \\ %{}) do
-      {:ok, credential} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Accounts.create_credential()
-
-      credential
-    end
-
-    test "list_credentials/0 returns all credentials" do
-      credential = credential_fixture()
-      assert Accounts.list_credentials() == [credential]
-    end
-
-    test "get_credential!/1 returns the credential with given id" do
-      credential = credential_fixture()
-      assert Accounts.get_credential!(credential.id) == credential
-    end
-
-    test "create_credential/1 with valid data creates a credential" do
-      assert {:ok, %Credential{} = credential} = Accounts.create_credential(@valid_attrs)
-      assert credential.email == "some email"
-      assert credential.password_hash == "some password_hash"
-    end
-
-    test "create_credential/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Accounts.create_credential(@invalid_attrs)
-    end
-
-    test "update_credential/2 with valid data updates the credential" do
-      credential = credential_fixture()
-      assert {:ok, credential} = Accounts.update_credential(credential, @update_attrs)
-      assert %Credential{} = credential
-      assert credential.email == "some updated email"
-      assert credential.password_hash == "some updated password_hash"
-    end
-
-    test "update_credential/2 with invalid data returns error changeset" do
-      credential = credential_fixture()
-      assert {:error, %Ecto.Changeset{}} = Accounts.update_credential(credential, @invalid_attrs)
-      assert credential == Accounts.get_credential!(credential.id)
-    end
-
-    test "delete_credential/1 deletes the credential" do
-      credential = credential_fixture()
-      assert {:ok, %Credential{}} = Accounts.delete_credential(credential)
-      assert_raise Ecto.NoResultsError, fn -> Accounts.get_credential!(credential.id) end
-    end
-
-    test "change_credential/1 returns a credential changeset" do
-      credential = credential_fixture()
-      assert %Ecto.Changeset{} = Accounts.change_credential(credential)
-    end
+    assert { :error, changeset } = Rumbl.Accounts.create_user(attrs)
+    assert "has already been taken" in errors_on(changeset).username
   end
 end

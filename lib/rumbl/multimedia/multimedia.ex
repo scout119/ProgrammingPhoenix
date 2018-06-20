@@ -7,6 +7,7 @@ defmodule Rumbl.Multimedia do
   alias Rumbl.Repo
 
   alias Rumbl.Multimedia.Video
+  alias Rumbl.Multimedia.Category
   alias Rumbl.Accounts
 
   @doc """
@@ -123,7 +124,7 @@ defmodule Rumbl.Multimedia do
   end
 
   defp preload_user(video_or_videos) do
-    Repo.preload(video_or_videos, :user)  
+    Repo.preload(video_or_videos, :user)
   end
 
   defp user_videos_query(query, %Accounts.User{id: user_id}) do
@@ -143,4 +144,9 @@ defmodule Rumbl.Multimedia do
     |> Repo.all()
   end
 
+  def create_category(attrs \\ %{}) do
+    %Category{}
+    |> Category.changeset(attrs)
+    |> Repo.insert()
+  end
 end
