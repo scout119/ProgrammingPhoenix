@@ -59,9 +59,10 @@ defmodule RumblWeb do
     quote do
       use Phoenix.Channel
       import RumblWeb.Gettext
+      import Ecto
     end
   end
-    
+
   @doc """
   When used, dispatch to the appropriate controller/view/etc.
   """

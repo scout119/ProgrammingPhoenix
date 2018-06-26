@@ -7,7 +7,11 @@ defmodule Rumbl.Accounts.User do
   schema "users" do
     field :name, :string
     field :username, :string
+
     has_one :credential, Credential
+
+    has_many :videos, Rumbl.Multimedia.Video
+    has_many :annotations, Rumbl.Multimedia.Annotation
 
     timestamps()
   end
