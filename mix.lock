@@ -1,6 +1,6 @@
 %{
   "bcrypt_elixir": {:hex, :bcrypt_elixir, "1.0.7", "e79d84b666bfad0e461ed217860e1c7de6bc4a1ae919cdb39d473ca784817653", [:make, :mix], [{:elixir_make, "~> 0.4", [hex: :elixir_make, repo: "hexpm", optional: false]}], "hexpm"},
-  "comeonin": {:hex, :comeonin, "4.1.1", "c7304fc29b45b897b34142a91122bc72757bc0c295e9e824999d5179ffc08416", [:mix], [{:argon2_elixir, "~> 1.2", [hex: :argon2_elixir, repo: "hexpm", optional: true]}, {:bcrypt_elixir, "~> 0.12.1 or ~> 1.0", [hex: :bcrypt_elixir, repo: "hexpm", optional: true]}, {:pbkdf2_elixir, "~> 0.12", [hex: :pbkdf2_elixir, repo: "hexpm", optional: true]}], "hexpm", "48b5691682dc7b4d744af1fe4660c6bceb14e49acf2a900309a20990a0eb7d64"},
+  "comeonin": {:hex, :comeonin, "5.3.1", "7fe612b739c78c9c1a75186ef2d322ce4d25032d119823269d0aa1e2f1e20025", [:mix], [], "hexpm", "d6222483060c17f0977fad1b7401ef0c5863c985a64352755f366aee3799c245"},
   "connection": {:hex, :connection, "1.0.4", "a1cae72211f0eef17705aaededacac3eb30e6625b04a6117c1b2db6ace7d5976", [:mix], [], "hexpm", "4a0850c9be22a43af9920a71ab17c051f5f7d45c209e40269a1938832510e4d9"},
   "cowboy": {:hex, :cowboy, "1.1.2", "61ac29ea970389a88eca5a65601460162d370a70018afe6f949a29dca91f3bb0", [:rebar3], [{:cowlib, "~> 1.0.2", [hex: :cowlib, repo: "hexpm", optional: false]}, {:ranch, "~> 1.3.2", [hex: :ranch, repo: "hexpm", optional: false]}], "hexpm", "f4763bbe08233eceed6f24bc4fcc8d71c17cfeafa6439157c57349aa1bb4f17c"},
   "cowlib": {:hex, :cowlib, "1.0.2", "9d769a1d062c9c3ac753096f868ca121e2730b9a377de23dec0f7e08b1df84ee", [:make], [], "hexpm", "db622da03aa039e6366ab953e31186cc8190d32905e33788a1acb22744e6abd2"},
@@ -22,5 +22,5 @@
   "poolboy": {:hex, :poolboy, "1.5.1", "6b46163901cfd0a1b43d692657ed9d7e599853b3b21b95ae5ae0a777cf9b6ca8", [:rebar], [], "hexpm", "8f7168911120e13419e086e78d20e4d1a6776f1eee2411ac9f790af10813389f"},
   "postgrex": {:hex, :postgrex, "0.13.5", "3d931aba29363e1443da167a4b12f06dcd171103c424de15e5f3fc2ba3e6d9c5", [:mix], [{:connection, "~> 1.0", [hex: :connection, repo: "hexpm", optional: false]}, {:db_connection, "~> 1.1", [hex: :db_connection, repo: "hexpm", optional: false]}, {:decimal, "~> 1.0", [hex: :decimal, repo: "hexpm", optional: false]}], "hexpm", "a19b61193379cdee04b5b2361bf93d1eb170cd2eec0b18042617b07e1e15fbfb"},
   "ranch": {:hex, :ranch, "1.3.2", "e4965a144dc9fbe70e5c077c65e73c57165416a901bd02ea899cfd95aa890986", [:rebar3], [], "hexpm", "6e56493a862433fccc3aca3025c946d6720d8eedf6e3e6fb911952a7071c357f"},
-  "sweet_xml": {:hex, :sweet_xml, "0.5.1", "b7568bba29224cec444a25827fcfa11c8c22886fda8389d0c32cbae3c5bc259f", [:mix], [], "hexpm", "3266dedc5e2e6c6b1c5b8a088504a58980632727803de22a5a276da847ea6947"},
+  "sweet_xml": {:hex, :sweet_xml, "0.6.6", "fc3e91ec5dd7c787b6195757fbcf0abc670cee1e4172687b45183032221b66b8", [:mix], [], "hexpm", "2e1ec458f892ffa81f9f8386e3f35a1af6db7a7a37748a64478f13163a1f3573"},
 }
