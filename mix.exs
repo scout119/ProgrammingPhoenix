@@ -40,7 +40,7 @@ defmodule Rumbl.Mixfile do
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"},
+      {:cowboy, "~> 2.8"},
       {:comeonin,  "~> 5.3"},
       {:pbkdf2_elixir,  "~> 1.2"},
       {:sweet_xml, "~> 0.6.6"}
