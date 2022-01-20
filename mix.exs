@@ -42,7 +42,7 @@ defmodule Rumbl.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 2.8"},
       {:comeonin,  "~> 5.3"},
-      {:pbkdf2_elixir,  "~> 1.2"},
+      {:pbkdf2_elixir,  "~> 2.0"},
       {:sweet_xml, "~> 0.6.6"}
     ]
   end
